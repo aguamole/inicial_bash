@@ -1,2 +1,9 @@
 # inicial_bash
-Instalação inicial ao instalar o linux.
+<p>Instalação inicial ao instalar o linux.</p>
+
+
+
+
+
+
+<p>Instalação de vários programas.</p>
