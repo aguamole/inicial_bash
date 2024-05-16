@@ -31,7 +31,7 @@ apt install -y falkon
 clear ; echo "Instalando o utilitários" ; sleep 4
 apt install -y \
 vlc qbittorrent vim gparted thunderbird nautilus \
-nemo gnome-font-viewer gdebi gnome-tweaks
+nemo gnome-font-viewer gdebi gnome-tweaks evince
 
 # programas de Edição.
 clear ; echo "Instalando programas de imagem e som." ; sleep 4
