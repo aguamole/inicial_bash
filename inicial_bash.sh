@@ -22,26 +22,26 @@ apt update && apt list --upgradable && apt upgrade -y && apt autoremove -y && ap
 # Complementos do Gedit
 clear ; echo "Instalando o Gedit completo..." ; sleep 4
 apt install -y \
-gedit gedit-plugins gedit-plugin-text-size 2&> /dev/null
+gedit gedit-plugins gedit-plugin-text-size > /dev/null 2>&1
 
 # Instalação do Wine.
 clear ; echo "Instalando o Wine completo..." ; sleep 4
-apt install -y wine q4wine 2&> /dev/null
+apt install -y wine q4wine > /dev/null 2>&1
 
 # Instalação de Navegadores.
 clear ; echo "Instalando o navegador web básico..." ; sleep 4
-apt install -y falkon 2&> /dev/null
+apt install -y falkon > /dev/null 2>&1
 
 # Programas utilitários
 clear ; echo "Instalando o utilitários..." ; sleep 4
 apt install -y \
 vlc qbittorrent vim gparted thunderbird nautilus \
-nemo gnome-font-viewer gdebi gnome-tweaks evince 2&> /dev/null
+nemo gnome-font-viewer gdebi gnome-tweaks evince > /dev/null 2>&1
 
 # programas de Edição.
 clear ; echo "Instalando programas de imagem e som..." ; sleep 4
 apt install -y \
-gimp inkscape audacity shotcut obs-studio 2&> /dev/null
+gimp inkscape audacity shotcut obs-studio > /dev/null 2>&1
 
 # Colocando idioma em português dos aplicativos.
 clear ; echo "Instalando idioma em português dos aplicativos..."
@@ -49,7 +49,7 @@ echo "Libre Office, ThunderBird e Firefox." ; sleep 4
 apt install -y \
 libreoffice-l10n-pt-br \
 thunderbird-l10n-pt-br \
-firefox-esr-l10n-pt-br 2&> /dev/null
+firefox-esr-l10n-pt-br > /dev/null 2>&1
 
 # programas de Jogos
 clear ; echo "Instalando programas de Jogos." ; sleep 4
