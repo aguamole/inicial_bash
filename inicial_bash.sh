@@ -23,11 +23,11 @@ else
 fi
 
 [ -f /var/log/instalador.log ] || \
-    sudo echo "    Data e Hora     | Pacote | Situação" \
+    sudo echo "    Data e Hora     | Situação  | > Pacote" \
     > /var/log/instalador.log
 
 #Lista de programas.
-Gedit=("gedit" "gedis" "gedit-plugin-text-size")
+Gedit=("gedit" "gedit-plugin" "gedit-plugin-text-size")
 Windows=("wine" "q4wine")
 Navegadores=("falkon")
 Utilitarios=("vlc" "qbittorrent" "vim" "gparted" "thunderbird" "nautilus" \
@@ -38,19 +38,22 @@ Idiomas=("libreoffice-l10n-pt-br" \
          "thunderbird-l10n-pt-br" \
          "firefox-esr-l10n-pt-br")
 
+# Função Principal
 insta_programas () {
     Vetor=("$@")
     for p in ${Vetor[@]}; do
-        sudo $Pacote install -y $p
+        echo "Instalando : $p"
+        sudo $Pacote install -y $p > /dev/null 2>&1
         Status=$? ; Data=$(date "+%d-%m-%Y %H:%M:%S")
         if [ $Status = 0 ]; then
-            echo "$Data | $p | Instalado" >> /var/log/instalador.log
+            echo "$Data | Instalado | > $p" >> /var/log/instalador.log
         elif [ $Status = 1 ]; then
-            echo "$Data | $p | Erro" >> /var/log/instalador.log
+            echo "$Data | Erro      | > $p" >> /var/log/instalador.log
         fi
     done
 }
 
+# Chamadas
 insta_programas ${Gedit[@]}
 insta_programas ${Windows[@]}
 insta_programas ${Navegadores[@]}
