@@ -85,8 +85,8 @@ insta_programas () {
 }
 
 mostra_log () {
-echo -e "\n\nFinal do arquivo de log em $ArquivoLog"
-tail -n 100 $ArquivoLog
+    echo -e "\n\nFinal do arquivo de log em $ArquivoLog"
+    tail -n 100 $ArquivoLog
 }
 
 # Chamada de funções
