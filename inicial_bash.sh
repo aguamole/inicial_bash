@@ -52,7 +52,7 @@ Idiomas=("libreoffice-l10n-pt-br" \
          "firefox-esr-l10n-pt-br")
 
 # Limpador de log.
-# Deixa o arquivo de log com no máximo 1000 linhas.
+# Deixa o arquivo de log com máximo 1000 linhas.
 limpa_logs () {
     [ -f $ArquivoLog ] && \
     Linhas=$(wc -l $ArquivoLog | cut -d" " -f1) && \
