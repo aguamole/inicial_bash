@@ -3,7 +3,6 @@
 # Atualiza o sistema operacional #
 # Instalação de programas iniciais #
 
-clear
 # Verifica se o usuário é root.
 USUARIO=$(whoami)
 if [ $USUARIO = "root" ];then
@@ -14,45 +13,47 @@ else
     exit 10
 fi
 
+# Verifica o gerenciador de pacotes.
+if [ -f /usr/bin/rpm ]; then
+    Pacote="yum"
+elif [ -f /usr/bin/dpkg ]; then
+    Pacote="apt"
+else
+    echo "Gerenciador de pacotes não encontrado!" ; exit 1
+fi
 
-echo "Atualizando o sistema..." ; sleep 4
-apt update && apt list --upgradable && apt upgrade -y && apt autoremove -y && apt autoclean -y
+[ -f /var/log/instalador.log ] || \
+    sudo echo "    Data e Hora     | Pacote | Situação" \
+    > /var/log/instalador.log
 
+#Lista de programas.
+Gedit=("gedit" "gedis" "gedit-plugin-text-size")
+Windows=("wine" "q4wine")
+Navegadores=("falkon")
+Utilitarios=("vlc" "qbittorrent" "vim" "gparted" "thunderbird" "nautilus" \
+             "nemo" "gnome-font-viewer" "gnome-tweaks" "gdebi" "evince" \
+             "libreoffice")
+Edicao=("gimp" "inkscape" "audacity" "shotcut" "obs-studio")
+Idiomas=("libreoffice-l10n-pt-br" \
+         "thunderbird-l10n-pt-br" \
+         "firefox-esr-l10n-pt-br")
 
-# Complementos do Gedit
-clear ; echo "Instalando o Gedit completo..." ; sleep 4
-apt install -y \
-gedit gedit-plugins gedit-plugin-text-size > /dev/null 2>&1
+insta_programas () {
+    Vetor=("$@")
+    for p in ${Vetor[@]}; do
+        sudo $Pacote install -y $p
+        Status=$? ; Data=$(date "+%d-%m-%Y %H:%M:%S")
+        if [ $Status = 0 ]; then
+            echo "$Data | $p | Instalado" >> /var/log/instalador.log
+        elif [ $Status = 1 ]; then
+            echo "$Data | $p | Erro" >> /var/log/instalador.log
+        fi
+    done
+}
 
-# Instalação do Wine.
-clear ; echo "Instalando o Wine completo..." ; sleep 4
-apt install -y wine q4wine > /dev/null 2>&1
-
-# Instalação de Navegadores.
-clear ; echo "Instalando o navegador web básico..." ; sleep 4
-apt install -y falkon > /dev/null 2>&1
-
-# Programas utilitários
-clear ; echo "Instalando o utilitários..." ; sleep 4
-apt install -y \
-vlc qbittorrent vim gparted thunderbird nautilus \
-nemo gnome-font-viewer gdebi gnome-tweaks evince > /dev/null 2>&1
-
-# programas de Edição.
-clear ; echo "Instalando programas de imagem e som..." ; sleep 4
-apt install -y \
-gimp inkscape audacity shotcut obs-studio > /dev/null 2>&1
-
-# Colocando idioma em português dos aplicativos.
-clear ; echo "Instalando idioma em português dos aplicativos..."
-echo "Libre Office, ThunderBird e Firefox." ; sleep 4
-apt install -y \
-libreoffice-l10n-pt-br \
-thunderbird-l10n-pt-br \
-firefox-esr-l10n-pt-br > /dev/null 2>&1
-
-# programas de Jogos
-clear ; echo "Instalando programas de Jogos." ; sleep 4
-apt install -y steam && apt install -y lutris
-
-clear ; echo "Fim da execução do script."
+insta_programas ${Gedit[@]}
+insta_programas ${Windows[@]}
+insta_programas ${Navegadores[@]}
+insta_programas ${Utilitarios[@]}
+insta_programas ${Edicao[@]}
+insta_programas ${Idiomas[*]}
